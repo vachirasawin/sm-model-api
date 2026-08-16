@@ -70,6 +70,7 @@ def predict(payload: PredictRequest):
 
         X_new = pd.DataFrame([features])
         X_new = X_new.reindex(columns=feature_columns, fill_value=0.0)
+        X_new = X_new.apply(pd.to_numeric, errors="coerce").fillna(0.0).astype(float)
 
         y_predicted = model.predict(X_new)
         y_predicted = round_to_grade_scale(y_predicted)[0]
